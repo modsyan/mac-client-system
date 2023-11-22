@@ -14,6 +14,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
     // public DbSet<TodoList> TodoLists => Set<TodoList>();
     // public DbSet<TodoItem> TodoItems => Set<TodoItem>();
     
+    public DbSet<Account> Accounts => Set<Account>();
     public DbSet<LicenseCategory> LicenseCategories => Set<LicenseCategory>();
     public DbSet<LicenseOrder> LicenseOrders => Set<LicenseOrder>();
     public DbSet<TripTickOrder> TripTickOrders => Set<TripTickOrder>();

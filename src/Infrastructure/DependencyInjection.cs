@@ -1,4 +1,5 @@
-﻿using MacClientSystem.Application.Common.Interfaces;
+﻿using System.Diagnostics.CodeAnalysis;
+using MacClientSystem.Application.Common.Interfaces;
 using MacClientSystem.Domain.Constants;
 using MacClientSystem.Infrastructure.Data;
 using MacClientSystem.Infrastructure.Data.Interceptors;
@@ -15,6 +16,8 @@ namespace MacClientSystem.Infrastructure;
 
 public static class DependencyInjection
 {
+    [RequiresUnreferencedCode("JsonSerializer")]
+    [RequiresDynamicCode("JsonSerializer")]
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection");
@@ -24,6 +27,10 @@ public static class DependencyInjection
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
         services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
 
+        
+        services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.JwtOptionsSectionName));
+        services.Configure<DiskFileOptions>(configuration.GetSection(DiskFileOptions.DiskFileOptionSectionName));
+        
         services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
@@ -47,7 +54,7 @@ public static class DependencyInjection
             .AddApiEndpoints();
 
         services.AddSingleton(TimeProvider.System);
-        services.AddScoped<IIdentityService, IdentityService>();
+        services.AddTransient<IIdentityService, IdentityService>();
 
         services.AddTransient<IFileUploadService, FileUploadService>();
         

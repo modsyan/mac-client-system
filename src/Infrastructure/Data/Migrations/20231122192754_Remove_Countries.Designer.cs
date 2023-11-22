@@ -4,6 +4,7 @@ using MacClientSystem.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MacClientSystem.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231122192754_Remove_Countries")]
+    partial class Remove_Countries
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -173,9 +176,8 @@ namespace MacClientSystem.Infrastructure.Data.Migrations
                     b.Property<Guid>("LocalDrivingLicenseId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("NationalityCountry")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("NationalityId")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("PassportImageId")
                         .HasColumnType("uniqueidentifier");
@@ -187,9 +189,8 @@ namespace MacClientSystem.Infrastructure.Data.Migrations
                     b.Property<Guid>("PersonalPhotoId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("SourceOfLocalLicenseCountry")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("SourceOfLocalLicenseId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -200,11 +201,15 @@ namespace MacClientSystem.Infrastructure.Data.Migrations
                     b.HasIndex("LocalDrivingLicenseId")
                         .IsUnique();
 
+                    b.HasIndex("NationalityId");
+
                     b.HasIndex("PassportImageId")
                         .IsUnique();
 
                     b.HasIndex("PersonalPhotoId")
                         .IsUnique();
+
+                    b.HasIndex("SourceOfLocalLicenseId");
 
                     b.ToTable("LicenseOrders");
                 });
@@ -345,7 +350,7 @@ namespace MacClientSystem.Infrastructure.Data.Migrations
                     b.Property<string>("LastModifiedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NationalityCountry")
+                    b.Property<string>("Nationality")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -748,6 +753,12 @@ namespace MacClientSystem.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("MacClientSystem.Domain.Entities.Country", "Nationality")
+                        .WithMany()
+                        .HasForeignKey("NationalityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("MacClientSystem.Domain.Entities.UploadedFile", "PassportImage")
                         .WithOne()
                         .HasForeignKey("MacClientSystem.Domain.Entities.LicenseOrder", "PassportImageId")
@@ -760,15 +771,25 @@ namespace MacClientSystem.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("MacClientSystem.Domain.Entities.Country", "SourceOfLocalLicense")
+                        .WithMany()
+                        .HasForeignKey("SourceOfLocalLicenseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.Navigation("Account");
 
                     b.Navigation("LicenseType");
 
                     b.Navigation("LocalDrivingLicense");
 
+                    b.Navigation("Nationality");
+
                     b.Navigation("PassportImage");
 
                     b.Navigation("PersonalPhoto");
+
+                    b.Navigation("SourceOfLocalLicense");
                 });
 
             modelBuilder.Entity("MacClientSystem.Domain.Entities.TodoItem", b =>

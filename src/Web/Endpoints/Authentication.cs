@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MacClientSystem.Web.Endpoints;
 
-public class Auth(IIdentityService identityService) : EndpointGroupBase
+public class Authentication(IIdentityService identityService) : EndpointGroupBase
 {
     public override void Map(WebApplication app)
     {

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace MacClientSystem.Infrastructure.Identity;
@@ -28,14 +29,14 @@ public class IdentityService : IIdentityService
     public IdentityService(
         UserManager<ApplicationUser> userManager,
         IUserClaimsPrincipalFactory<ApplicationUser> userClaimsPrincipalFactory,
-        IAuthorizationService authorizationService, IMapper mapper, IWebHostEnvironment env, JwtOptions jwt)
+        IAuthorizationService authorizationService, IMapper mapper, IWebHostEnvironment env, IOptions<JwtOptions> jwt)
     {
         _userManager = userManager;
         _userClaimsPrincipalFactory = userClaimsPrincipalFactory;
         _authorizationService = authorizationService;
         _mapper = mapper;
         _env = env;
-        _jwt = jwt;
+        _jwt = jwt.Value;
     }
 
     public async Task<string?> GetUserNameAsync(string userId)
