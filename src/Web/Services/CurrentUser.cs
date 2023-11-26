@@ -13,5 +13,7 @@ public class CurrentUser : IUser
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public string? Id => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+    public string Username => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.Name) ?? string.Empty;
+    public string? UserId => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
+    public int AccountId => _httpContextAccessor.HttpContext?.User?.FindFirstValue("account_id") != null ? Convert.ToInt32(_httpContextAccessor.HttpContext?.User?.FindFirstValue("AccountId")) : 0;
 }

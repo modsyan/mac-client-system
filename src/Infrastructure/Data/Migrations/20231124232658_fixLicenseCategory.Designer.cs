@@ -4,6 +4,7 @@ using MacClientSystem.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MacClientSystem.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231124232658_fixLicenseCategory")]
+    partial class fixLicenseCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,17 +158,12 @@ namespace MacClientSystem.Infrastructure.Data.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ExternalUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Gander")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Gander")
+                        .HasColumnType("int");
 
                     b.Property<DateTimeOffset>("LastModified")
                         .HasColumnType("datetimeoffset");
@@ -176,9 +174,8 @@ namespace MacClientSystem.Infrastructure.Data.Migrations
                     b.Property<int>("LicenseDuration")
                         .HasColumnType("int");
 
-                    b.Property<string>("LicenseType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("LicenseTypeId")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("LocalDrivingLicenseId")
                         .HasColumnType("uniqueidentifier");
@@ -204,6 +201,8 @@ namespace MacClientSystem.Infrastructure.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AccountId");
+
+                    b.HasIndex("LicenseTypeId");
 
                     b.HasIndex("LocalDrivingLicenseId")
                         .IsUnique();
@@ -327,10 +326,6 @@ namespace MacClientSystem.Infrastructure.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Equipment")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ExternalUserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -517,7 +512,7 @@ namespace MacClientSystem.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VehicleTypes");
+                    b.ToTable("VehicleType");
                 });
 
             modelBuilder.Entity("MacClientSystem.Infrastructure.Identity.ApplicationUser", b =>
@@ -751,6 +746,12 @@ namespace MacClientSystem.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("MacClientSystem.Domain.Entities.LicenseCategory", "LicenseType")
+                        .WithMany()
+                        .HasForeignKey("LicenseTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("MacClientSystem.Domain.Entities.UploadedFile", "LocalDrivingLicense")
                         .WithOne()
                         .HasForeignKey("MacClientSystem.Domain.Entities.LicenseOrder", "LocalDrivingLicenseId")
@@ -770,6 +771,8 @@ namespace MacClientSystem.Infrastructure.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Account");
+
+                    b.Navigation("LicenseType");
 
                     b.Navigation("LocalDrivingLicense");
 

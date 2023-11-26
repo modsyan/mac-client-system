@@ -6,6 +6,6 @@ namespace MacClientSystem.Application.Common.Interfaces;
 
 public interface IFileUploadService
 {
-    public Task<UploadedFile> UploadFormFile(IFormFile file);
-    public UploadedFileDto DownloadFormFile(UploadedFile file);
+    public Task<UploadedFile> SaveToDisk(IFormFile file);
+    public Task<UploadedFileDto> GetFile(UploadedFile file);
 }

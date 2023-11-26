@@ -7,8 +7,8 @@ public class ApplicationUser : IdentityUser
 {
     public string FullName { get; set; } = string.Empty;
     
-    public int AccountId { get; set; }
-    public virtual Account Account { get; set; } = null!;
+    public int? AccountId { get; set; }
+    public virtual Account Account { get; set; } = default!;
     
     public Guid? ProfilePictureId { get; set; }
     public virtual UploadedFile ProfilePicture { get; set; } = null!;

@@ -20,7 +20,6 @@
     <Folder Include="Common\Models\DTOs\" />
     <Folder Include="Common\Models\ViewModels\" />
     <Folder Include="LicenseOrders\EventHandlers\" />
-    <Folder Include="OrderLists\" />
     <Folder Include="TripTickOrders\EventHandlers\" />
   </ItemGroup>
 

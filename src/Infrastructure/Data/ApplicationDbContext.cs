@@ -21,6 +21,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
     public DbSet<UploadedFile> FileUploads => Set<UploadedFile>();
     public DbSet<Country> Countries => Set<Country>();
     public DbSet<City> Cities => Set<City>();
+    public DbSet<VehicleType> VehicleTypes => Set<VehicleType>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

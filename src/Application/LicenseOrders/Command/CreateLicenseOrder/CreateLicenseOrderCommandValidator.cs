@@ -14,35 +14,32 @@ public class CreateLicenseOrderCommandValidator: AbstractValidator<CreateLicense
         RuleFor(v => v.BloodType)
             .NotEmpty();
         
-        RuleFor(v => v.NationalityId)
+        RuleFor(v => v.NationalityCountry)
             .NotEmpty();
         
-        RuleFor(v => v.SourceOfLocalLicenseId)
+        RuleFor(v => v.SourceOfLocalLicenseCountry)
             .NotEmpty();
         
         RuleFor(v => v.Gander)
             .NotEmpty();
         
-        RuleFor(v => v.PassportId)
+        RuleFor(v => v.PassportTextId)
             .MaximumLength(100)
             .NotEmpty();
         
-        RuleFor(v => v.LicenseTypeId)
-            .NotEmpty();
+        // RuleFor(v => v.LicenseTypeId)
+        //     .NotEmpty();
         
         RuleFor(v => v.LicenseDuration)
             .NotEmpty();
         
-        RuleFor(v => v.PersonalPhotoFileId)
-            .NotEmpty();
-        
-        RuleFor(v => v.PersonalPhoto)
-            .NotEmpty();
-        
-        RuleFor(v => v.LocalDrivingLicense)
-            .NotEmpty();
-        
-        RuleFor(v => v.Passport)
-            .NotEmpty();
+        // RuleFor(v => v.PersonalPhoto)
+        //     .NotEmpty();
+        //
+        // RuleFor(v => v.LocalDrivingLicense)
+        //     .NotEmpty();
+        //
+        // RuleFor(v => v.Passport)
+        //     .NotEmpty();
     }
 }

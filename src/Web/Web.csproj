@@ -40,6 +40,7 @@
 
   <ItemGroup>
     <Content Remove="Pages\**" />
+    <Content Remove="wwwroot\api\specification.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -53,7 +54,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\uplaods\" />
+    <Folder Include="wwwroot\api\" />
+    <Folder Include="wwwroot\assets\uploads\" />
   </ItemGroup>
 
   <!-- Auto-generated Open API specification and Angular TypeScript clients -->

@@ -10,6 +10,7 @@ public interface IApplicationDbContext
 
     // DbSet<TodoItem> TodoItems { get; }
 
+    DbSet<Account> Accounts { get; } 
     DbSet<LicenseCategory> LicenseCategories { get; }
 
     DbSet<LicenseOrder> LicenseOrders { get; }
@@ -18,6 +19,6 @@ public interface IApplicationDbContext
     DbSet<UploadedFile> FileUploads { get; }
     DbSet<Country> Countries { get; }
     DbSet<City> Cities { get; }
-
+    DbSet<VehicleType> VehicleTypes { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

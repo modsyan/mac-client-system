@@ -8,10 +8,10 @@ public class CreateTripTickOrderCommandValidator: AbstractValidator<CreateTripTi
             .MaximumLength(100)
             .NotEmpty();
         
-        RuleFor(v => v.ResidenceCountryId)
+        RuleFor(v => v.ResidenceCountry)
             .NotEmpty();
         
-        RuleFor(v => v.NationalityId)
+        RuleFor(v => v.NationalityCountry)
             .NotEmpty();
         
         RuleFor(v => v.GovernmentalId)
@@ -36,10 +36,10 @@ public class CreateTripTickOrderCommandValidator: AbstractValidator<CreateTripTi
         RuleFor(v => v.PhoneNumber2)
             .MaximumLength(100);
         
-        RuleFor(v => v.ExtraDriversCount)
-            .NotEmpty();
+        // RuleFor(v => v.ExtraDriversCount)
+        //     .NotEmpty();
         
-        RuleFor(v => v.VehicleRegistrationCountryId)
+        RuleFor(v => v.VehicleRegistrationCountry)
             .NotEmpty();
         
         RuleFor(v => v.VehicleNumber)
@@ -85,14 +85,14 @@ public class CreateTripTickOrderCommandValidator: AbstractValidator<CreateTripTi
         RuleFor(v => v.VehicleCoverId)
             .MaximumLength(100)
             .NotEmpty();
-        
-        RuleFor(v => v.AirCondetionarAvailable)
+
+        RuleFor(v => v.AirConditionerAvailable)
             .NotEmpty();
         
         RuleFor(v => v.RadioAvailable)
             .NotEmpty();
 
-        RuleFor(v => v.Extensions)
+        RuleFor(v => v.Equipment)
             .MaximumLength(100)
             .NotEmpty();
     }

@@ -146,14 +146,9 @@ public class IdentityService : IIdentityService
 
     public async Task<bool> RegisterUserAsync(RegisterUserCommand cmd)
     {
-        
-        var user = new ApplicationUser
-        {
-            UserName = cmd.Username, 
-            Email = cmd.Email,
-        };
-        
-        
+        var user = new ApplicationUser { UserName = cmd.Username, Email = cmd.Email, };
+
+
         var result = await _userManager.CreateAsync(user, cmd.Password);
 
         // return (result.ToApplicationResult(), user.Id);
@@ -162,14 +157,16 @@ public class IdentityService : IIdentityService
 
     private async Task<string> GenerateToken(ApplicationUser user)
     {
+        
         var userClaims = await _userManager.GetClaimsAsync(user);
         var userRoles = await _userManager.GetRolesAsync(user);
         var roleClaims = userRoles.Select(role => new Claim("roles", role)).ToList();
 
-        var claims = new[]
-            {
-                new Claim(ClaimTypes.Email, user.Email!), new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            }
+        var emailClaim = new Claim(ClaimTypes.Email, user.Email!);
+        var userIdClaim = new Claim(ClaimTypes.NameIdentifier, user.Id.ToString());
+        var accountIdClaim = new Claim("account_id", (user.AccountId?? 0).ToString(), ClaimValueTypes.Integer32);
+
+        var claims = new[] { emailClaim, userIdClaim, accountIdClaim }
             .Union(userClaims)
             .Union(roleClaims);
 

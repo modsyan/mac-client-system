@@ -2,5 +2,7 @@
 
 public interface IUser
 {
-    string? Id { get; }
+    public string Username { get; }
+    string? UserId { get; }
+    int AccountId { get; }
 }

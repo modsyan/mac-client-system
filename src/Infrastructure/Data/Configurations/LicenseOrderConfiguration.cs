@@ -31,6 +31,12 @@ public class LicenseOrderConfiguration : IEntityTypeConfiguration<LicenseOrder>
         builder.Property(l => l.BloodType)
             .HasConversion<string>();
 
+        builder.Property(l => l.Gander)
+            .HasConversion<string>();
+        
+        builder.Property(l=>l.LicenseType)
+            .HasConversion<string>();
+
         // builder.HasOne(l => l.SourceOfLocalLicense)
         //     .WithMany()
         //     .HasForeignKey(l => l.SourceOfLocalLicenseId)
