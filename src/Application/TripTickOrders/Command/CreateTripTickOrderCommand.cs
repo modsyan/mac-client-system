@@ -12,6 +12,9 @@ public class CreateTripTickOrderCommand : IRequest<bool>
  
     // FIXME: TILL REMOVE FIREBASE AUTHENTICATION
     public string ExternalUserId { get; set; } = string.Empty!;
+
+    public bool IsPaid { get; set; } 
+    
     public string FullName { get; set; } = String.Empty;
     public string ResidenceCountry { get; set; } = string.Empty!;
     public string NationalityCountry { get; set; } = string.Empty!;
@@ -67,6 +70,7 @@ public class CreateTripTickOrderCommandHandler
         {
             // AccountId = user.AccountId, //TODO: HANDLE CLAIMS AND CURRENT USER SERVICE || HANDLE JwtFactoryService
             AccountId = 1, 
+            IsPaid = request.IsPaid,
             ExternalUserId = request.ExternalUserId,
             FullName = request.FullName,
             ResidenceCountry = request.ResidenceCountry,

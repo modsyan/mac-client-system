@@ -10,6 +10,7 @@ public class CreateLicenseOrderCommand : IRequest<bool>
 {
     // FIXME: TILL REMOVE FIREBASE AUTHENTICATION
     public string ExternalUserId { get; set; } = string.Empty!;
+    public bool IsPaid { get; set; }
     public string FullName { get; set; } = string.Empty!;
     public DateTime BirthDate { get; set; }
     public BloodTypes BloodType { get; set; }
@@ -45,6 +46,7 @@ public class CreateLicenseOrderCommandHandler
         {
             // AccountId = user.AccountId,
             AccountId = 1,
+            IsPaid = request.IsPaid,
             ExternalUserId = request.ExternalUserId,
             Gander = request.Gander,
             LicenseType = request.LicenseType,

@@ -15,6 +15,8 @@ public class LicenseOrder: BaseAuditableEntity
     
     public DateTime BirthDate { get; set; }
     
+    public bool IsPaid { get; set; }
+    
     public BloodTypes BloodType { get; set; }
 
     #region temp

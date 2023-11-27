@@ -77,7 +77,8 @@ app.UseExceptionHandler(options =>
         var ex = context.Features.Get<IExceptionHandlerFeature>();
         if (ex != null)
         {
-            var err = JsonConvert.SerializeObject(new { error = ex.Error.Message });
+            // var err = JsonConvert.SerializeObject(new { error = ex.Error.Message });
+            var err = JsonConvert.SerializeObject(new { error = ex.Error });
             await context.Response.WriteAsync(err).ConfigureAwait(false);
         }
     });
