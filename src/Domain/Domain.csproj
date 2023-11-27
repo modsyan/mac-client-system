@@ -3,6 +3,7 @@
   <PropertyGroup>
     <RootNamespace>MacClientSystem.Domain</RootNamespace>
     <AssemblyName>MacClientSystem.Domain</AssemblyName>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
