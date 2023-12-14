@@ -12,6 +12,8 @@
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" />
     <PackageReference Include="Microsoft.EntityFrameworkCore"/>
+    <PackageReference Include="QRCoder" />
+    <PackageReference Include="System.Drawing.Common" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,6 +44,12 @@
     <None Remove="TodoItems\**" />
     <None Remove="TodoLists\**" />
     <None Remove="WeatherForecasts\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Drawing.Common">
+      <HintPath>..\..\..\..\..\..\..\..\..\home\modsyan\.nuget\packages\system.drawing.common\6.0.0\lib\net6.0\System.Drawing.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
