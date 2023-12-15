@@ -1,6 +1,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Net;
 using System.Net.Mime;
 using QRCoder;
 using Brush = System.Drawing.Brush;
@@ -114,8 +115,11 @@ public static class DrawELicenseHelper
         Bitmap baseImage = new Bitmap(imagePath);
 
         // Set the position to draw the QR code on the base image (adjust these values as needed)
-        int x = baseImage.Width - qrCodeImage.Width + 140;
-        int y = baseImage.Height - qrCodeImage.Height - 40;
+        // int x = baseImage.Width - qrCodeImage.Width + 140;
+        // int y = baseImage.Height - qrCodeImage.Height - 40;
+
+        int x = baseImage.Width - qrCodeImage.Width + 100;
+        int y = baseImage.Height - qrCodeImage.Height - 80;
 
         // Draw the QR code on the base image
         using (Graphics graphics = Graphics.FromImage(baseImage))
@@ -135,60 +139,114 @@ public static class DrawELicenseHelper
         baseImage.Dispose();
     }
 
-    public static void DrawPersonalImage(string personalImagePath, string licenseImagePath, string outputImagePath)
+    public static void DrawPersonalImageFromLocal(string personalImagePath, string licenseImagePath, string outputImagePath)
     {
         // Load the background image
-        Bitmap
-            backgroundImage =
-                new Bitmap(licenseImagePath); // Replace "background.jpg" with the path to your background image
-
+        Bitmap backgroundImage = new Bitmap(licenseImagePath); // Replace "background.jpg" with the path to your background image
+    
         // Load the image to draw on top of the background
-        Bitmap imageToDraw = new Bitmap(personalImagePath); // Replace "overlay.png" with the path to your overlay image
+        Bitmap imageToDraw = new(personalImagePath); // Replace "overlay.png" with the path to your overlay image
+        
         // Resize the imageToDraw to the desired size
         const int newWidth = 238; // Replace with the desired width
         const int newHeight = 290; // Replace with the desired height
-        Bitmap resizedImage = ResizeImage(imageToDraw, newWidth, newHeight);
+        Bitmap resizedImage = ResizeImage(imageToDraw, newWidth, newHeight, 0);
+        
         // Create a Graphics object from the background image
         using (Graphics graphics = Graphics.FromImage(backgroundImage))
         {
             // Set the interpolation mode to high quality to ensure smooth drawing
-            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-
+            graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+    
             // Draw the overlay image on top of the background image
             graphics.DrawImage(resizedImage,
                 new Point(45, 188)); // You can adjust the coordinates (50, 50) as per your requirement
         }
-
+    
         // Save the final image with lossless quality
         ImageCodecInfo?
-            codec = GetEncoderInfo(
-                "image/png"); // Choose the appropriate codec based on your needs (PNG for lossless compression)
+            codec = GetEncoderInfo("image/png"); // Choose the appropriate codec based on your needs (PNG for lossless compression)
         EncoderParameters encoderParameters = new EncoderParameters(1);
         encoderParameters.Param[0] =
             new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 100L); // 100% quality for lossless compression
-
+    
         backgroundImage.Save(outputImagePath, codec!, encoderParameters); // Replace "output.png" with the desired output file path
-
+    
         // Dispose of the Bitmap objects to release resources
         backgroundImage.Dispose();
         resizedImage.Dispose();
         imageToDraw.Dispose();
     }
+    
+    
 
+    public static async Task DrawPersonalImage(string personalImagePath, string licenseImagePath,
+        string outputImagePath)
+    {
+        try
+        {
+            using (HttpClient httpClient = new HttpClient())
+            using (HttpResponseMessage response = await httpClient.GetAsync(personalImagePath))
+            await using (Stream stream = await response.Content.ReadAsStreamAsync())
+            {
+                using (Bitmap imageToDraw = new Bitmap(stream))
+                {
+                    // Load the background image
+                    using (Bitmap backgroundImage = new Bitmap(licenseImagePath))
+                    {
+                        // Resize the imageToDraw to the desired size without rotation
+                        const int newWidth = 238;
+                        const int newHeight = 290;
+                        using (Bitmap resizedImage =
+                               ResizeImage(imageToDraw, newWidth, newHeight, 0)) // 0 degrees rotation
+                        {
+                            // Create a Graphics object from the background image
+                            using (Graphics graphics = Graphics.FromImage(backgroundImage))
+                            {
+                                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                                graphics.DrawImage(resizedImage, new Point(45, 188));
+                            }
+    
+                            // Save the final image with lossless quality
+                            ImageCodecInfo? codec = GetEncoderInfo("image/png");
+                            EncoderParameters encoderParameters = new EncoderParameters(1);
+                            encoderParameters.Param[0] =
+                                new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, 100L);
+    
+                            backgroundImage.Save(outputImagePath, codec!, encoderParameters);
+                        }
+                    }
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+    }
+
+    private static Bitmap ResizeImage(Image image, int newWidth, int newHeight, float rotationAngle)
+    {
+        Bitmap resizedImage = new Bitmap(newWidth, newHeight);
+
+        using (Graphics graphics = Graphics.FromImage(resizedImage))
+        {
+            graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            graphics.TranslateTransform((float)newWidth / 2, (float)newHeight / 2);
+            graphics.RotateTransform(rotationAngle);
+            graphics.TranslateTransform(-(float)newWidth / 2, -(float)newHeight / 2);
+            graphics.DrawImage(image, new Rectangle(0, 0, newWidth, newHeight));
+        }
+
+        return resizedImage;
+    }
+    
+    
     private static ImageCodecInfo? GetEncoderInfo(string mimeType)
     {
         ImageCodecInfo[] encoders = ImageCodecInfo.GetImageEncoders();
         return encoders.FirstOrDefault(encoder => encoder.MimeType == mimeType);
     }
-
-    private static Bitmap ResizeImage(Image image, int newWidth, int newHeight)
-    {
-        Bitmap resizedImage = new Bitmap(newWidth, newHeight);
-
-        using Graphics graphics = Graphics.FromImage(resizedImage);
-        graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-        graphics.DrawImage(image, new Rectangle(0, 0, newWidth, newHeight));
-
-        return resizedImage;
-    }
+    
 }

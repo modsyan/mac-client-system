@@ -1,10 +1,16 @@
+using MacClientSystem.Application.Common.Interfaces;
+
 namespace MacClientSystem.Application.Issuing.Command;
 
 public class DrawLicenseCommandValidator : AbstractValidator<DrawLicenseCommand>
 {
-    public DrawLicenseCommandValidator()
+    public DrawLicenseCommandValidator(IApplicationDbContext context)
     {
         RuleFor(v => v.Id).NotEmpty().WithMessage("Id is required.");
+        RuleFor(v=>v.Id).MustAsync(
+            async (id, cancellationToken) => await context.ExternalIssuedLicenses
+                .AnyAsync(x => x.LicenseOrderId != id, cancellationToken)
+            ).WithMessage("License is already issued.");
         // RuleFor(v => v.Id).GreaterThan(0).WithMessage("Id must be greater than 0.");
         // RuleFor(v => v.Id).LessThan(1000000000).WithMessage("Id must be less than 1000000000.");
         // RuleFor(v => v.Id).MustAsync(Exist).WithMessage("Id does not exist.");

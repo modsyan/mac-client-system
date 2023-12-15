@@ -4,6 +4,7 @@ using MacClientSystem.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MacClientSystem.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231215015727_adding extrnal-issued-license with drawer")]
+    partial class Addingextrnalissuedlicensewithdrawer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,7 +39,7 @@ namespace MacClientSystem.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Accounts", (string)null);
+                    b.ToTable("Accounts");
                 });
 
             modelBuilder.Entity("MacClientSystem.Domain.Entities.City", b =>
@@ -58,7 +61,7 @@ namespace MacClientSystem.Infrastructure.Data.Migrations
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("Cities", (string)null);
+                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("MacClientSystem.Domain.Entities.Country", b =>
@@ -99,7 +102,7 @@ namespace MacClientSystem.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countries", (string)null);
+                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("MacClientSystem.Domain.Entities.ExternalIssuedLicense", b =>
@@ -154,7 +157,7 @@ namespace MacClientSystem.Infrastructure.Data.Migrations
                     b.HasIndex("LicenseImagePathId")
                         .IsUnique();
 
-                    b.ToTable("ExternalIssuedLicenses", (string)null);
+                    b.ToTable("ExternalIssuedLicenses");
                 });
 
             modelBuilder.Entity("MacClientSystem.Domain.Entities.IssuedLicense", b =>
@@ -191,7 +194,7 @@ namespace MacClientSystem.Infrastructure.Data.Migrations
                     b.HasIndex("UploadedFileId")
                         .IsUnique();
 
-                    b.ToTable("IssuedLicenses", (string)null);
+                    b.ToTable("IssuedLicenses");
                 });
 
             modelBuilder.Entity("MacClientSystem.Domain.Entities.LicenseCategory", b =>
@@ -220,7 +223,7 @@ namespace MacClientSystem.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("LicenseCategories", (string)null);
+                    b.ToTable("LicenseCategories");
                 });
 
             modelBuilder.Entity("MacClientSystem.Domain.Entities.LicenseOrder", b =>
@@ -309,7 +312,7 @@ namespace MacClientSystem.Infrastructure.Data.Migrations
                     b.HasIndex("PersonalPhotoId")
                         .IsUnique();
 
-                    b.ToTable("LicenseOrders", (string)null);
+                    b.ToTable("LicenseOrders");
                 });
 
             modelBuilder.Entity("MacClientSystem.Domain.Entities.TripTickOrder", b =>
@@ -489,7 +492,7 @@ namespace MacClientSystem.Infrastructure.Data.Migrations
 
                     b.HasIndex("VehicleTypeId");
 
-                    b.ToTable("TripTickOrders", (string)null);
+                    b.ToTable("TripTickOrders");
                 });
 
             modelBuilder.Entity("MacClientSystem.Domain.Entities.UploadedFile", b =>
@@ -518,7 +521,7 @@ namespace MacClientSystem.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FileUploads", (string)null);
+                    b.ToTable("FileUploads");
                 });
 
             modelBuilder.Entity("MacClientSystem.Domain.Entities.VehicleType", b =>
@@ -535,7 +538,7 @@ namespace MacClientSystem.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("VehicleTypes", (string)null);
+                    b.ToTable("VehicleTypes");
                 });
 
             modelBuilder.Entity("MacClientSystem.Infrastructure.Identity.ApplicationUser", b =>

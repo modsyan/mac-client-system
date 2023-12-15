@@ -13,19 +13,15 @@ public class Issuing : EndpointGroupBase
             .AllowAnonymous()
             .MapPost(DrawLicense, "licenses")
             .MapGet(GetAllUserIssuedLicense, "licenses/user/{userId}")
-            .MapGet(GetIssuedLicense, "licenses/{id}");
-        
-        // /api/issuing/licenses/user/{userId}
-        // /api/issuing/licenses/{id}
-
+            .MapGet(GetIssuedLicense, "licenses/{licenseOrderId}");
     }
     
-    public async Task<IssuedLicenseVm> GetAllUserIssuedLicense(ISender sender, [AsParameters] GetUserIssuedLicensesQuery query)
+    public async Task<ExternalIssuedLicenseVm> GetAllUserIssuedLicense(ISender sender, [AsParameters] GetUserExternalIssuedLicensesQuery query)
     {
         return await sender.Send(query);
     }
     
-    public async Task<IssuedLicenseDto> GetIssuedLicense(ISender sender, [AsParameters] GetIssuedLicenseByOrderIdQuery query)
+    public async Task<ExternalIssuedLicenseDto> GetIssuedLicense(ISender sender, [AsParameters] GetExternalIssuedLicenseByOrderIdQuery query)
     {
        return await sender.Send(query);
     }

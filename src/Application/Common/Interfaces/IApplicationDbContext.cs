@@ -20,5 +20,9 @@ public interface IApplicationDbContext
     DbSet<Country> Countries { get; }
     DbSet<City> Cities { get; }
     DbSet<VehicleType> VehicleTypes { get; }
+    
+    public DbSet<IssuedLicense> IssuedLicenses { get;}
+    
+    public DbSet<ExternalIssuedLicense> ExternalIssuedLicenses { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 }

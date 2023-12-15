@@ -60,7 +60,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\api\" />
-    <Folder Include="wwwroot\assets\uploads\1\" />
+    <Folder Include="wwwroot\assets\" />
   </ItemGroup>
 
   <!-- Auto-generated Open API specification and Angular TypeScript clients -->
