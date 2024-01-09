@@ -46,9 +46,9 @@ public class IdentityService : IIdentityService
         return user.UserName;
     }
 
-    public async Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password)
+    public async Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password,string nationalId)
     {
-        var user = new ApplicationUser { UserName = userName, Email = userName, };
+        var user = new ApplicationUser { UserName = userName, Email = userName, NationalId=nationalId};
 
         var result = await _userManager.CreateAsync(user, password);
 
@@ -146,7 +146,7 @@ public class IdentityService : IIdentityService
 
     public async Task<bool> RegisterUserAsync(RegisterUserCommand cmd)
     {
-        var user = new ApplicationUser { UserName = cmd.Username, Email = cmd.Email, };
+        var user = new ApplicationUser { UserName = cmd.Username, Email = cmd.Email,NationalId= cmd.NationalId};
 
 
         var result = await _userManager.CreateAsync(user, cmd.Password);
