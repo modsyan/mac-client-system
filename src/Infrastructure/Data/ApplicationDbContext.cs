@@ -21,8 +21,9 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>, IApplica
     public DbSet<UploadedFile> FileUploads => Set<UploadedFile>();
     public DbSet<Country> Countries => Set<Country>();
     public DbSet<City> Cities => Set<City>();
+    public DbSet<Coupon> Coupons => Set<Coupon>();
+
     public DbSet<VehicleType> VehicleTypes => Set<VehicleType>();
-    
     public DbSet<IssuedLicense> IssuedLicenses => Set<IssuedLicense>();
     
     public DbSet<ExternalIssuedLicense> ExternalIssuedLicenses => Set<ExternalIssuedLicense>();
