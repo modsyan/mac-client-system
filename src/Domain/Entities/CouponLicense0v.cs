@@ -1,6 +1,6 @@
 namespace MacClientSystem.Domain.Entities;
 
-public class CouponLicense: BaseAuditableEntity
+public class CouponLicense0v: BaseAuditableEntity
 {
     public Guid CouponId { get; set; }
     public Couponv0 Couponv0 { get; set; } = null!;
