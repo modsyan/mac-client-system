@@ -6,7 +6,7 @@ namespace MacClientSystem.Application.LicenseOrders.Query;
 
 public record GetAllLicenseOrderQuery : IRequest<LicenseOrderVm>;
 
-public class GetAllLicenseOrderQueryHandler
+public class GetAllLicenseOrderQueryHandler 
     (IApplicationDbContext context/*, IMapper mapper*/) : IRequestHandler<GetAllLicenseOrderQuery, LicenseOrderVm>
 {
     public async Task<LicenseOrderVm> Handle(GetAllLicenseOrderQuery request, CancellationToken cancellationToken)

@@ -21,5 +21,11 @@
     <ProjectReference Include="..\Application\Application.csproj"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="MacOfflineAPI\" />
+    <Folder Include="MacElicenceAPI\" />
+    <Folder Include="MacOnlineAPI\" />
+  </ItemGroup>
+
 
 </Project>

@@ -4,6 +4,7 @@ namespace MacClientSystem.Application.LicenseOrders.Query;
 
 public record GetUserLicenseOrderQuery(string ExternalUserId) : IRequest<LicenseOrderVm>;
 
+
 public class GetUserLicenseOrderQueryHandler(IApplicationDbContext context/*, IMapper mapper*/) : IRequestHandler<GetUserLicenseOrderQuery, LicenseOrderVm>
 {
     public async Task<LicenseOrderVm> Handle(GetUserLicenseOrderQuery request, CancellationToken cancellationToken)

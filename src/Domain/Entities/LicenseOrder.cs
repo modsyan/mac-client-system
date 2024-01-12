@@ -18,7 +18,7 @@ public class LicenseOrder: BaseAuditableEntity
     public bool IsPaid { get; set; }
     
     public BloodTypes BloodType { get; set; }
-
+    public LicenseStatus LicenseStatus { get; set; } = LicenseStatus.pending;
     #region temp
 
     // public int NationalityId { get; set; }

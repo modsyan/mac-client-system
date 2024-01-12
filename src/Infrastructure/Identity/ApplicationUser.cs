@@ -9,6 +9,7 @@ public class ApplicationUser : IdentityUser
     
     public int? AccountId { get; set; }
     public virtual Account Account { get; set; } = default!;
+    public string NationalId { get; set; } = null!;
     
     public Guid? ProfilePictureId { get; set; }
     public virtual UploadedFile ProfilePicture { get; set; } = null!;
